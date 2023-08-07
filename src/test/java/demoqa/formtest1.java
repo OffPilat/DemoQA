@@ -8,6 +8,10 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class formtest1 {
+
+    static void beforeAll() {
+
+    }
     @Test
     void fillformtest() {
         open("https://demoqa.com/automation-practice-form");
