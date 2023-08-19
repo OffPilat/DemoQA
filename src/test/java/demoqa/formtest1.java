@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import pages.RegistrationForm;
 
 import java.io.File;
 
@@ -45,38 +46,46 @@ public class formtest1 {
 
     @Test
     void fillformDemoQa() {
-        Configuration.pageLoadStrategy = "eager";
-        open("https://demoqa.com/automation-practice-form");
-        executeJavaScript("$('footer').remove()");
-        $("#firstName").setValue("Ivan");
-        $("#lastName").setValue("Ivanov");
-        $("#userEmail").setValue("ivan@mail.ru");
-        $("[for='gender-radio-1']").click();
-        $("#userNumber").setValue("1231231231");
-        $("#dateOfBirthInput").click();
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").$(byText("June")).click();
-        $(".react-datepicker__year-select").$(byText("2000")).click();
-        $(".react-datepicker__day.react-datepicker__day--013:not(.react-datepicker__day--outside-month)").click();
-        $("#subjectsInput").setValue("Math").pressEnter();
-        $("[for='hobbies-checkbox-1']").click();
-        $("[for='hobbies-checkbox-2']").click();
-        $("#uploadPicture").uploadFromClasspath("chrome_f5jD7YwmMn.png");
-        $("#currentAddress").setValue("Backker Str. 139");
-        $("#state").click();
-        $("#react-select-3-option-0").click();
-        $("#city").click();
-        $("#stateCity-wrapper").$(byText("Noida")).click();
+        String FirstName = "Ivan";
+        String LastName = "Ivanov";
+        String Email = "ivan@mail.ru";
+        String Number = "1231231231";
+        String Subject1 = "Maths";
+        String Subject2 = "Chemistry";
+        String Adress = "Backker Str. 139";
+        String Day = "30";
+        String Month = "June";
+        String Year = "2000";
+        String FileName = "chrome_f5jD7YwmMn.png";
+        String State = "NCR";
+        String City = "Noida";
+        String Hobbie = "1";
+
+        new RegistrationForm().openPage();
+        new RegistrationForm().setFirstName(FirstName);
+        new RegistrationForm().setLastName(LastName);
+        new RegistrationForm().setEmail(Email);
+        new RegistrationForm().setGender("1");
+        new RegistrationForm().setNumber(Number);
+        new RegistrationForm().setCalendarDate(Day, Month, Year);
+        new RegistrationForm().setSubjects(Subject1);
+        new RegistrationForm().setSubjects(Subject2);
+        new RegistrationForm().setHobbie(Hobbie);
+        new RegistrationForm().uploadFrom(FileName);
+        new RegistrationForm().setAddress(Adress);
+        new RegistrationForm().setLocation(State, City);
         $("#submit").click();
-        $("tbody tr", 0).shouldHave(text("Ivan Ivanov"));
-        $("tbody tr", 1).shouldHave(text("ivan@mail.ru"));
-        $("tbody tr", 2).shouldHave(text("Male"));
-        $("tbody tr", 3).shouldHave(text("1231231231"));
-        $("tbody tr", 4).shouldHave(text("13 June,2000"));
-        $("tbody tr", 5).shouldHave(text("Maths"));
-        $("tbody tr", 6).shouldHave(text("Sports, Reading"));
-        $("tbody tr", 7).shouldHave(text("chrome_f5jD7YwmMn.png"));
-        $("tbody tr", 8).shouldHave(text("Backker Str. 139"));
-        $("tbody tr", 9).shouldHave(text("NCR Noida"));
+
+        new RegistrationForm().verifyResult(0, FirstName);
+        new RegistrationForm().verifyResult(0, LastName);
+        new RegistrationForm().verifyResult(1, Email);
+        new RegistrationForm().verifyResult(2, "Male");
+        new RegistrationForm().verifyResult(3, Number);
+        new RegistrationForm().verifyResult(4, Day + " " + Month + "," + Year);
+        new RegistrationForm().verifyResult(5, Subject1 + ", " + Subject2);
+        new RegistrationForm().verifyResult(6, "Sports");
+        new RegistrationForm().verifyResult(7, FileName);
+        new RegistrationForm().verifyResult(8, Adress);
+        new RegistrationForm().verifyResult(9, State + " " + City);
     }
 }
